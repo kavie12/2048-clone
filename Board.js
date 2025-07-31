@@ -24,6 +24,16 @@ export default class Board {
     }
 
     #generateNewTile() {
+        if (this.#isGameOver()) {
+            console.log("Game over");
+            return;
+        }
+
+        if (!this.#isEmptyCellAvailable()) {
+            console.log("No empty cell");
+            return;
+        }
+
         const value = Math.random() < 0.9 ? 2 : 4;
         
         let cellIndex = this.#generateRandomCellIndex();
@@ -43,14 +53,54 @@ export default class Board {
         };
     }
 
-    // TO BE IMPLEMENTED: Have to check possible moves
     #isGameOver() {
+        // Check is there's a possible move if no empty cell is available
+        if (!this.#isEmptyCellAvailable()) {
+            const matrix = [];
+            for (const row of this.#cellMatrix) {
+                const newRow = [];
+                for (const cell of row) {
+                    newRow.push(cell.value);
+                }
+                matrix.push(newRow);
+            }
+
+            const transposedMatrix = [];
+            for (const rowIndex in this.#cellMatrix) {
+                const newRow = [];
+                for (const columnIndex in this.#cellMatrix[rowIndex]) {
+                    newRow.push(this.#cellMatrix[columnIndex][rowIndex].value);
+                }
+                transposedMatrix.push(newRow);
+            }
+
+            return !this.#isSlidable(matrix) && !this.#isSlidable(transposedMatrix);
+        }
+
+        return false;
+    }
+
+    #isEmptyCellAvailable() {
         for (const row of this.#cellMatrix) {
             for (const cell of row) {
-                if (!cell.isTile()) return false;
+                if (!cell.isTile()) {
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
+    }
+
+    #isSlidable(matrix) {
+        for (let i = 0; i < matrix.length; i++) {
+            matrix[i] = matrix[i].filter(value => value !== null);
+            for (let j = 0; j < matrix[i].length - 1; j++) {
+                if (matrix[i][j] === matrix[i][j + 1]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     slideLeft() {
@@ -145,7 +195,7 @@ export default class Board {
     }
 
     #slide(matrix) {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < matrix.length; i++) {
             // Clear null values
             matrix[i] = matrix[i].filter(cell => cell !== null);
 
@@ -170,9 +220,9 @@ export default class Board {
     }
 
     #drawMatrixValues(matrix) {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                this.#cellMatrix[i][j].value = matrix[i][j];
+        for (const rowIndex in matrix) {
+            for (const columnIndex in matrix[rowIndex]) {
+                this.#cellMatrix[rowIndex][columnIndex].value = matrix[rowIndex][columnIndex];
             }
         }
     }
