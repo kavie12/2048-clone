@@ -6,14 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     board.init();
 
     // Handle inputs
-    document.addEventListener("keydown", e => {
-        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+    document.addEventListener("keydown", event => {
+        if (board.isGameOver) return;
+
+        if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") {
             board.slideLeft();
-        } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+        } else if (event.key === "ArrowRight" || event.key === "d" || event.key === "D") {
             board.slideRight();
-        } else if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") {
+        } else if (event.key === "ArrowUp" || event.key === "w" || event.key === "W") {
             board.slideUp();
-        } else if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") {
+        } else if (event.key === "ArrowDown" || event.key === "s" || event.key === "S") {
             board.slideDown();
         }
     });

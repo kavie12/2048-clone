@@ -6,6 +6,8 @@ export default class Board {
     constructor(boardElement) {
         this.boardElement = boardElement;
         this.#cellMatrix = [];
+
+        this.isGameOver = false;
     }
 
     init() {
@@ -24,18 +26,21 @@ export default class Board {
     }
 
     #generateNewTile() {
+        // Check if game is over
         if (this.#isGameOver()) {
+            this.isGameOver = true;
             console.log("Game over");
             return;
         }
 
+        // Check if there are empty cells
         if (!this.#isEmptyCellAvailable()) {
             console.log("No empty cell");
             return;
         }
 
+        // Generate a random tile
         const value = Math.random() < 0.9 ? 2 : 4;
-        
         let cellIndex = this.#generateRandomCellIndex();
 
         while (this.#cellMatrix[cellIndex.x][cellIndex.y].isTile()) {
@@ -43,6 +48,13 @@ export default class Board {
         }
 
         this.#cellMatrix[cellIndex.x][cellIndex.y].value = value;
+
+        // Check if game is over
+        if (this.#isGameOver()) {
+            this.isGameOver = true;
+            console.log("Game over");
+            return;
+        }
     }
 
     #generateRandomCellIndex() {
