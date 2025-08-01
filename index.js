@@ -1,13 +1,21 @@
 import Board from "./Board.js";
 
+const boardElement = document.getElementById("board");
+const sectionGameOver = document.getElementById("sectionGameOver");
+const btnPlayAgain = document.getElementById("btnPlayAgain");
+
 document.addEventListener("DOMContentLoaded", () => {
     // Initiate game
-    const board = new Board(document.getElementById("board"));
+    const board = new Board(boardElement);
     board.init();
 
     // Handle inputs
     document.addEventListener("keydown", event => {
-        if (board.isGameOver) return;
+        // Check game over
+        if (board.isGameOver) {
+            sectionGameOver.classList.remove("hidden");
+            return;
+        };
 
         if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") {
             board.slideLeft();
@@ -18,5 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (event.key === "ArrowDown" || event.key === "s" || event.key === "S") {
             board.slideDown();
         }
+    });
+
+    // Handle play again
+    btnPlayAgain.addEventListener("click", () => {
+        board.reset();
+        sectionGameOver.classList.add("hidden");
     });
 });

@@ -26,13 +26,6 @@ export default class Board {
     }
 
     #generateNewTile() {
-        // Check if game is over
-        if (this.#isGameOver()) {
-            this.isGameOver = true;
-            console.log("Game over");
-            return;
-        }
-
         // Check if there are empty cells
         if (!this.#isEmptyCellAvailable()) {
             console.log("No empty cell");
@@ -53,7 +46,6 @@ export default class Board {
         if (this.#isGameOver()) {
             this.isGameOver = true;
             console.log("Game over");
-            return;
         }
     }
 
@@ -237,5 +229,18 @@ export default class Board {
                 this.#cellMatrix[rowIndex][columnIndex].value = matrix[rowIndex][columnIndex];
             }
         }
+    }
+
+    reset() {
+        this.isGameOver = false;
+
+        for (const row of this.#cellMatrix) {
+            for (const cell of row) {
+                cell.reset();
+            }
+        }
+
+        this.#generateNewTile();
+        this.#generateNewTile();
     }
 }

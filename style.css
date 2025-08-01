@@ -7,6 +7,7 @@ body {
     height: 100vh;
     margin: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: rgb(32, 32, 32);
@@ -16,21 +17,21 @@ body {
     background-color: #bbada0;
     display: grid;
     grid-template-columns: auto auto auto auto;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 4px;
+    gap: 0.9vmin;
+    padding: 0.9vmin;
+    border-radius: 0.4vmin;
 }
 
 .cell {
     background-color: #cdc1b4;
     color: #776e65;
-    width: 120px;
-    height: 120px;
-    border-radius: 4px;
+    width: 12vmin;
+    height: 12vmin;
+    border-radius: 0.4vmin;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 48px;
+    font-size: 5vmin;
     font-weight: bold;
 }
 
@@ -87,4 +88,36 @@ body {
 .tile-2048 {
     background-color: #edc22e;
     color: #f9f6f2;
+}
+
+#sectionGameOver {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sectionGameOver.hidden {
+    display: none;
+}
+
+#sectionGameOver span {
+    margin-top: 8vmin;
+    color: whitesmoke;
+    font-size: 3.6vmin;
+    font-weight: bold;
+}
+
+#sectionGameOver button {
+    margin-top: 2.8vmin;
+    padding: 1vmin 1.6vmin;
+    font-size: 1.5vmin;
+    font-weight: bold;
+    background-color: #f2d679;
+    cursor: pointer;
+    border-radius: 0.4vmin;
+    border: none;
+}
+
+#sectionGameOver button:hover {
+    background-color: #e4c972;
 }

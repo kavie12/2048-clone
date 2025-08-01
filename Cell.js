@@ -9,13 +9,16 @@ export default class Cell {
     }
 
     set value(newValue) {
-        // Remove previous class if the new value is different
-        if (this.#value !== newValue) {
-            if (this.#value < 2048) {
-                this.cellElement.classList.remove(`tile-${this.#value}`);
-            } else {
-                this.cellElement.classList.remove(`tile-2048`);
-            }
+        // Do nothing if the value is not changed
+        if (this.#value === newValue) {
+            return;
+        }
+
+        // Remove previous class
+        if (this.#value < 2048) {
+            this.cellElement.classList.remove(`tile-${this.#value}`);
+        } else {
+            this.cellElement.classList.remove(`tile-2048`);
         }
 
         if (!newValue) {
@@ -42,5 +45,9 @@ export default class Cell {
 
     isTile() {
         return this.#value !== null;
+    }
+
+    reset() {
+        this.value = null;
     }
 }
