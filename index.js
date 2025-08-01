@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Handle inputs
     document.addEventListener("keydown", event => {
-        // Check game over
+        // Stop sliding if the game is over
         if (board.isGameOver) {
-            sectionGameOver.classList.remove("hidden");
             return;
         };
 
@@ -26,6 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (event.key === "ArrowDown" || event.key === "s" || event.key === "S") {
             board.slideDown();
         }
+
+        // Show game over section if the game is over
+        if (board.isGameOver) {
+            sectionGameOver.classList.remove("hidden");
+        };
     });
 
     // Handle play again
